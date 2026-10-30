@@ -267,19 +267,6 @@
         <div id="spot-groups"></div>
         <p class="small muted" id="no-match" style="padding:2.5rem 0; text-align:center;" hidden></p>
 
-        <section class="panel" aria-label="Free hosting" style="margin-top:2rem;">
-          <h3 class="font-display">Host this app free — GitHub Pages</h3>
-          <p><strong>It isn't live on GitHub Pages yet</strong> — publishing there needs your own GitHub account, which only you can sign into. The steps below are the whole job (about five minutes), and this page is ready to upload as-is.</p>
-          <p>GitHub Pages is the easiest free host for it: the whole app is one static page (plus its icon files), and forecasts load straight from Open-Meteo in the visitor's browser, so no server, database or API key is needed.</p>
-          <ol class="host-steps">
-            <li>Download this page as a file: <button type="button" class="close-link" id="download-btn" style="font-size:0.85rem;">Download index.html</button> <span id="download-note"></span></li>
-            <li>Create a free account at <a href="https://github.com" target="_blank" rel="noreferrer">github.com</a> and make a new public repository, e.g. <code>surf-forecast</code>.</li>
-            <li>Upload <code>index.html</code> to the repository (and the <code>assets</code> folder too, if you want the installable app icons).</li>
-            <li>In the repo, open <strong>Settings → Pages</strong>, set the source to <strong>Deploy from a branch</strong> → <code>main</code> → <code>/ (root)</code>, and save.</li>
-            <li>GitHub gives you a public address like <code>https://your-name.github.io/surf-forecast/</code> — live within a minute or two, free.</li>
-          </ol>
-        </section>
-
         <footer>
           <p>Spot catalog: <a href="https://www.surfnami.com" target="_blank" rel="noreferrer">Surfnami</a> · Forecasts: <a href="https://open-meteo.com" target="_blank" rel="noreferrer">Open-Meteo</a> marine &amp; weather models, in each spot's local time. Surf score is a simple heuristic: wave size × swell period, marked down for strong wind and heavy rain. Forecasts are estimates — check local lifeguards and official sources before paddling out.</p>
         </footer>
@@ -944,26 +931,6 @@
       }
     });
     $("install-help-close").addEventListener("click", () => { $("install-help").hidden = true; });
-
-    /* Download this page for hosting */
-    $("download-btn").addEventListener("click", async () => {
-      const note = $("download-note");
-      try {
-        const res = await fetch("index.html");
-        if (!res.ok) throw new Error("fetch failed");
-        const blob = await res.blob();
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(blob);
-        a.download = "index.html";
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        setTimeout(() => URL.revokeObjectURL(a.href), 4000);
-        note.textContent = "— saved. That's the file to upload.";
-      } catch (e) {
-        note.textContent = "— download didn't work here; use your browser's “Save page as…” and name the file index.html instead.";
-      }
-    });
 
     /* ================= Go ================= */
     renderHome();
